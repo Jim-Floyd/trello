@@ -2,18 +2,21 @@
 from django.db import models
 
 from project.models import ProjectColumns, Auditable, ProjectMember
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 
 
-class Task(Auditable):
-    name = models.CharField(max_length=200)
-    description = models.TextField()
-    column_id=models.ForeignKey(ProjectColumns, on_delete=models.CASCADE)
-    class Meta:
-        db_table='task'
+class Task(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField(null=True, blank=True)
+    is_completed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-class TaskMember(models.Model):
-    task=models.ForeignKey(Task,on_delete=models.CASCADE)
-    user = models.ForeignKey(ProjectMember, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['is_completed']
