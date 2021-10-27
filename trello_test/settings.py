@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'files',
     'project',
     'task',
+    'authentication'
 ]
 
 MIDDLEWARE = [

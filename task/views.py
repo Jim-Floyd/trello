@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from .models import Task
 from django.views.generic.list import ListView
