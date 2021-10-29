@@ -62,7 +62,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             join_path(BASE_DIR, 'templates'),
-            join_path(BASE_DIR, 'task', 'templates')
+            join_path(BASE_DIR, 'task', 'templates'),
+            join_path(BASE_DIR, 'authentication', 'templates')
 
                  ],
         'APP_DIRS': True,
@@ -126,6 +127,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+LOGIN_URL = 'authentication:login'
 
 STATIC_URL = '/static/'
 

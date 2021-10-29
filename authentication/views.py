@@ -19,9 +19,6 @@ class UserLogin(LoginView):
     template_name = 'authentication/login.html'
     fields = '__all__'
     redirect_authenticated_user = True
+
     def get_success_url(self):
         return reverse_lazy('tasks')
-
-
-
-

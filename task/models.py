@@ -1,4 +1,3 @@
-
 from django.db import models
 
 from authentication.models import AuthUser
@@ -21,10 +20,12 @@ class Task(models.Model):
     class Meta:
         db_table = 'task'
 
+
 class Comments(models.Model):
     comment = models.TextField()
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
+
     class Meta:
         db_table = 'comment'
 
@@ -37,5 +38,6 @@ class UploadComment(models.Model):
     code = models.CharField(max_length=70, unique=True)
     size = models.IntegerField()
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
+
     class Meta:
-            db_table = 'upload_comment'
+        db_table = 'upload_comment'
