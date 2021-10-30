@@ -1,18 +1,22 @@
+import datetime
+
+from django.contrib.auth.models import User
 from django.db import models
 
-from authentication.models import AuthUser
-from project.models import ProjectColumns, Auditable, ProjectMember
+# from authentication.models import AuthUser
+from project.models import Auditable, Project
 
 
 # Create your models here.
 
 
 class Task(models.Model):
-    user = models.ForeignKey(AuthUser, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    projectcolumn = models.ForeignKey(ProjectColumns, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=datetime.datetime.now())
+    task_column = models.ForeignKey('TaskColumn', on_delete=models.CASCADE, default='ToDo')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=-1)
 
     def __str__(self):
         return self.title
@@ -21,10 +25,21 @@ class Task(models.Model):
         db_table = 'task'
 
 
+class TaskColumn(models.Model):
+    name = models.CharField(max_length=200, default='ToDo')
+    code = models.CharField(max_length=200, default='TODO')
+
+    class Meta:
+        db_table = 'task_columns'
+
+    def __str__(self):
+        return self.name
+
+
 class Comments(models.Model):
     comment = models.TextField()
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'comment'

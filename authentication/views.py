@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 # Create your views here.
@@ -11,7 +12,7 @@ from authentication.models import AuthUser
 class UserCreate(FormView):
     form_class = UserCreationForm
     redirect_authenticated_user = True
-    model = AuthUser
+    model = User
     success_url = reverse_lazy('register')
 
 

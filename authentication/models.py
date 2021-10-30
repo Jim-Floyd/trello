@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from files.models import UploadUser
 
@@ -37,7 +38,7 @@ class Status(models.Model):
 class Employee(models.Model):
     address = models.CharField(max_length=200, null=True)
     age = models.CharField(max_length=200, null=True)
-    user = models.OneToOneField(AuthUser, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
     class Meta:
         db_table = 'auth_employee'

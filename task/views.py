@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import IntegrityError
 
 
 class TaskList(LoginRequiredMixin, ListView):
@@ -15,7 +16,7 @@ class TaskList(LoginRequiredMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
-        context['count'] = context['tasks'].filter(complete=False).count()
+        context['count'] = context['tasks'].filter().count()
 
 
 class TaskDetail(LoginRequiredMixin, DetailView):
@@ -26,7 +27,7 @@ class TaskDetail(LoginRequiredMixin, DetailView):
 
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
-    fields = ['title', 'description', 'created_at', 'projectcolumn']
+    fields = ['title', 'description', 'created_at', 'task_column']
     success_url = reverse_lazy('tasks')
 
     def form_valid(self, form):
@@ -36,7 +37,7 @@ class TaskCreate(LoginRequiredMixin, CreateView):
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
-    fields = ['title', 'description', 'created_at', 'projectcolumn']
+    fields = ['title', 'description', 'created_at', 'task_column']
     success_url = reverse_lazy('tasks')
 
 
